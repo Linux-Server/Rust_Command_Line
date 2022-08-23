@@ -4,6 +4,10 @@ use std::process;
 fn main(){
   let arguments = InputArguments::read_arguments();
   println!("Started to red file data from env argumets: {:?}", arguments);
+  if let Err(e) = arguments{
+    println!("Done.....");
+    process::exit(200);
+  }
 
 }
 #[allow(dead_code)]
