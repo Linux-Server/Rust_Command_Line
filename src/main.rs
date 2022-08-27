@@ -1,53 +1,42 @@
-use std::env;
-use std::process;
-
-fn main(){
-  let arguments = InputArguments::read_arguments();
-  println!("Started to red file data from env argumets: {:?}", arguments);
-  if let Err(e) = arguments{
-    println!("Done.....");
-    process::exit(200);
-  }
-
+use std::fmt::*;
+fn main() {
+    println!("Hello, world!");
+    let word = "neyya";
+    call_me(&word);
+    
+    let user = User{
+        name:"Sachin".to_string(),
+        age: 28
+    };
+    
+    let nora = User::ind_features(&user);
+    println!("The nora is {:?}", nora);
 }
+
+ // call mee to check the trait bound
+fn call_me<T>(data: &T) where T:Debug+Display{
+    println!("Call me ....{}", data);
+}
+
+trait Character{
+
+// its a default feature 
+    fn features(&self)->String{
+        format!("He is a good looking person")
+    }
+// its a common features
+    fn ind_features(&self)->String;
+}
+
+// struct to store user data
 #[allow(dead_code)]
-#[derive(Debug)]
-
-struct InputArguments {
-  query: String,
-  file_path : String
+struct User{
+    name: String,
+    age: u32
 }
 
-
-// alternate option for a regular funtion
-impl InputArguments{
-  fn read_arguments()-> Result<InputArguments,String>{
-     let arguments: Vec<String> = env::args().collect();
-     if arguments.len()<3{
-       return Err("Total Input Arguments Errror".to_string())
-     }
-     let query = arguments[1].clone();
-     let file_path = arguments[2].clone();
-     Ok(InputArguments{
-       query,
-       file_path
-     })
-  }
-}
-
-
-// read arguments in normal functional way
-fn read_arguments()-> InputArguments{
-  let arguments: Vec<String> = env::args().collect();
-  if arguments.len() < 3{
-    println!("All argumets are not passed!");
-    process::exit(200);
-  }
-  let query = arguments[1].clone();
-  let file_path = arguments[2].clone();
-  InputArguments{
-    query,
-    file_path
-  }
-  
+impl Character for User{
+    fn ind_features(&self)->String{
+        format!("{} and {} ", self.name, self.features())
+    }
 }
