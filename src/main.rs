@@ -11,11 +11,16 @@ fn main() {
     
     let nora = User::ind_features(&user);
     println!("The nora is {:?}", nora);
+    check_trait(&user);
 }
 
  // call mee to check the trait bound
 fn call_me<T>(data: &T) where T:Debug+Display{
     println!("Call me ....{}", data);
+}
+
+fn check_trait(data: &impl Character){
+  println!("He buddy : {:?}", data.features())
 }
 
 trait Character{
